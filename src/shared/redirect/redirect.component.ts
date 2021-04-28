@@ -28,7 +28,8 @@ export class RedirectComponent implements OnInit {
 
       if (params.shortURl) {
          this.request
-          .get(`http://${ip}:${port}/${params.shortURl}`)
+          // .get(`http://${ip}:${port}/${params.shortURl}`)
+          .get(`https://${ip}/${params.shortURl}`)
           .toPromise().then( (res) =>{
             const response = res as url;
             if (response?.urlToRedirect) {
