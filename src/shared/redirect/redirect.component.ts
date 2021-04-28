@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpApiService } from 'src/services/http-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ip } from 'src/environments/environment';
-import { port } from 'src/environments/environment';
+// import { port } from 'src/environments/environment';
 
 interface url {
   msg: string;
