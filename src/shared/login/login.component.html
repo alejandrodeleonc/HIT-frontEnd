@@ -1,0 +1,30 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="https://hit.com.do/wp-content/themes/HIT/images/logo.png" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form
+            id="login"
+            class="user"
+            [formGroup]="form"
+          >
+
+      <h3>Welcome Back!</h3>
+      <input type="text" id="login" class="fadeIn second" name="username"   formControlName="username"  placeholder="Username">
+      <input type="password" id="password" class="fadeIn third" name="password"  formControlName="password" placeholder="Password">
+      <input type="submit" class="fadeIn fourth" (click)="login()" value="Log In">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <!-- <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div> -->
+
+  </div>
+</div>
+

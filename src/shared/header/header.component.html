@@ -1,0 +1,47 @@
+<nav class="navbar navbar-light navbar-expand bg-light navigation-clean">
+  <div class="container">
+    <a class="navbar-brand" href="/">HIT URL SHORTENER</a
+    ><button
+      data-toggle="collapse"
+      class="navbar-toggler"
+      data-target="#navcol-1"
+    ></button>
+    <div
+      class=" collapse navbar-collapse"
+      id="navcol-1"
+      *ngIf="isLogged; else userInfo"
+    >
+      <div class="d-flex justify-content-end w-100">
+        <div>
+          <a class="btn btn-primary ml-auto" role="button" href="/auth/login"
+            >Sing in</a
+          >
+          <a class="align-self-end btn  btn-primary ml-2" role="button" href="/auth/singup"
+            >Sing up</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<ng-template #userInfo>
+  <!-- <p>{{fun.getUser()?.name}}</p> -->
+  <!-- <p>El nombre</p> -->
+  <div class="btn-group">
+    <button
+      type="button"
+      class="btn dropdown-toggle"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      {{ fun.getUser()?.username | titlecase }}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <button class="dropdown-item" type="button" (click)="signOut()">
+        Log out
+      </button>
+    </div>
+  </div>
+</ng-template>
