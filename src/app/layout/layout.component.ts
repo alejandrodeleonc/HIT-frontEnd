@@ -11,9 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LayoutComponent implements OnInit {
   public form: FormGroup;
+  public formC: FormGroup;
+  cantidad: Number = 3;
   agentes: any = [];
   urlMasVisitadas: any = [];
-  shortUrl: any = "";
+  shortUrl: any = '';
+  myUrls: any = [];
   constructor(
     private request: HttpApiService,
     public fun: FunctionService,
@@ -23,6 +26,12 @@ export class LayoutComponent implements OnInit {
     this.form = this.fb.group({
       longUrl: ['', [Validators.required]],
     });
+
+    this.formC = this.fb.group({
+      cantidad: [this.cantidad, [Validators.required, Validators.min(0)]],
+    });
+
+    // this.form.controls.cantidad.setValue(this.cantidad);
   }
 
   ngOnInit(): void {
@@ -32,9 +41,27 @@ export class LayoutComponent implements OnInit {
         console.log('res =>', res);
         this.agentes = res.top;
       });
+
+    this.loadUrlMostVisited(this.cantidad);
+    this.loadAllMyUrl();
+  }
+
+  reload() {
+    const value = this.formC.controls.cantidad.value;
+
+    if (value > 0) {
+      console.log(value);
+      this.cantidad = value;
+      this.loadUrlMostVisited(value);
+    } else {
+      this.fun.toasError('El Valor debe ser mayor que  cero');
+    }
+  }
+  loadUrlMostVisited(cantidad: Number) {
     this.request.mantenimiento
-      .dinamycReq(`misUrlsMasVisitadas/10`, 'get')
+      .dinamycReq(`misUrlsMasVisitadas/${cantidad}`, 'get')
       .then((res) => {
+        this.urlMasVisitadas = [];
         console.log('res =>', res.urls);
         Object.keys(res.urls).map((key) => {
           let aux = res.urls[key].shortUrl;
@@ -43,7 +70,19 @@ export class LayoutComponent implements OnInit {
         });
       });
   }
-
+  loadAllMyUrl() {
+    this.request.mantenimiento
+      .dinamycReq(`myUrls`, 'get')
+      .then((res) => {
+        this.myUrls = [];
+        console.log(res);
+        Object.keys(res.myUrls).map((key) => {
+          let aux = res.myUrls[key].longUrl;
+          console.log();
+          this.myUrls.push(aux);
+        });
+      });
+  }
   onSubmit() {
     const c = this.form.value;
 
@@ -56,7 +95,7 @@ export class LayoutComponent implements OnInit {
       .dinamycReq('registrar/longUrl', 'POST', obj)
       .then((res) => {
         console.log(res);
-        this.shortUrl = `https://${res.shortUrl}`
+        this.shortUrl = `https://${res.shortUrl}`;
       });
   }
   // async login() {

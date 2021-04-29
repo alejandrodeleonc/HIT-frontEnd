@@ -67,7 +67,10 @@
 
             </ng-template>
             <div class="div"  *ngIf="urlMasVisitadas?.length > 0 else noVisitedUrls"  >
-              <input type="number" placeholder="Cantidad" />
+              <form class="m-1" [formGroup]="formC">
+                <input type="number" placeholder="Quantity" formControlName="cantidad" />
+                <button (click)="reload()">Reload</button>
+              </form>
               <ul >
                 <li *ngFor="let url of urlMasVisitadas ">
                   <strong>
@@ -89,10 +92,20 @@
                 data-bss-hover-animate="pulse"
               ></i>
             </div>
-            <h3>Bootstrap 4 Ready</h3>
-            <p class="lead mb-0">
-              Featuring the latest build of the new Bootstrap 4 framework!
-            </p>
+            <h3>Your Long URLS</h3>
+            <ng-template #noURls>
+              <p>You don't have url registered </p>
+
+            </ng-template>
+            <div class="div"  *ngIf="myUrls?.length > 0 else noURls"  >
+              <ul >
+                <li *ngFor="let ag of myUrls | keyvalue">
+                  {{  ag.value }}
+
+                </li>
+
+              </ul>
+            </div>
           </div>
         </div>
         <div class="col-lg-4">
